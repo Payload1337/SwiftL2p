@@ -493,6 +493,7 @@
 				4A07BA201B5D6F26009A5E2E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4A07BA211B5D6F26009A5E2E /* Build configuration list for PBXNativeTarget "L2POAuthTests" */ = {
 			isa = XCConfigurationList;
@@ -501,6 +502,7 @@
 				4A07BA231B5D6F26009A5E2E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

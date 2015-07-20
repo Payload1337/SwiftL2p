@@ -10,6 +10,7 @@ import Foundation
 import Just
 
 
+
     var clientID = "Se8Uit5Hd244cltskaVUpHFVXaZ6exvKVTKsKhKTH70yTlPlWoHHUR5RFsy30nV.app.rwth-aachen.de"
     let obtainURL = "https://oauth.campus.rwth-aachen.de/oauth2waitress/oauth2.svc/code"
     let tokenURL = "https://oauth.campus.rwth-aachen.de/oauth2waitress/oauth2.svc/token"
@@ -36,6 +37,53 @@ import Just
         }
         return UserCodeReturn()
     }
+
+
+func getUserToken(user:UserCodeReturn) -> UserToken {
+    let response = Just.post(obtainURL, data: ["client_id":clientID, "code":user.device_code, "grant_type":"device"])
+    if let statuscode = response.statusCode as Int! {
+        if statuscode != 200 {
+            return UserToken(status: "error:  \(statuscode)")
+        }
+    }
+    if let json = response.json as? NSDictionary {
+        if let status = json["status"] as? String {
+            return UserToken(status: status)
+        } else {
+            if let access_token = json["access_token"] as? String {
+                if let refresh_token = json["refresh_token"] as? String {
+                    if let expires_in = json["expires_in"] as? Int {
+                        return UserToken(access_token: access_token, refresh_token: refresh_token, expires: expires_in)
+                    }
+                }
+            }
+        }
+    }
+    return UserToken(status: "error")
+}
+
+func refreshToken(userToken:UserToken) {
+    let response = Just.post(obtainURL, data: ["client_id":clientID, "refresh_token":userToken.refresh_token, "grant_type":"refresh_token"])
+    if let statuscode = response.statusCode as Int! {
+        if statuscode != 200 {
+           println("error:  \(statuscode)")
+        }
+    }
+    if let json = response.json as? NSDictionary {
+        if let error = json["status"] as? String {
+            println("error:  \(error)")
+        } else {
+            if let access_token = json["access_token"] as? String {
+                if let expires_in = json["expires_in"] as? Int {
+                        userToken.access_token = access_token
+                        userToken.expires_in = expires_in
+                    
+                }
+            }
+        }
+    }
+    
+}
 
 
 
@@ -72,6 +120,29 @@ struct UserCodeReturn {
         expires_in = 0
         interval = 0
         error = true
+    }
+}
+
+class UserToken {
+    var access_token:String
+    var refresh_token:String
+    var expires_in:Int
+    var status:String
+    
+    init(access_token:String,refresh_token:String,expires:Int){
+        self.access_token = access_token
+        self.refresh_token = refresh_token
+        expires_in = expires
+        status = "ok"
+    }
+    
+    
+    
+    init(status:String){
+        access_token = ""
+        refresh_token = ""
+        expires_in = 0
+        self.status = status
     }
 }
 
