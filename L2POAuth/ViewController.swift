@@ -23,7 +23,16 @@ class ViewController: UIViewController {
     }
 
     @IBAction func click(sender: UIButton) {
-                println(obtainUserCode())
+        //obtain userCode
+        let response = obtainUserCode()
+        
+        //accessing fields
+        println(response.device_code)
+        println(response.user_code)
+        println(response.verification_url)
+        println(response.expires_in)
+        
+        
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
