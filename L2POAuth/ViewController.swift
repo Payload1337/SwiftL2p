@@ -11,7 +11,7 @@ import Just
 
 class ViewController: UIViewController {
     
-    var userCode:UserCodeReturn!
+    var userCodeReturn:UserCodeReturn!
     var userToken:UserToken!
     
     @IBOutlet weak var testButton: UIButton!
@@ -26,13 +26,13 @@ class ViewController: UIViewController {
     @IBAction func testButtonClicked() {
             println("request userCode")
             //obtain userCode
-            userCode = obtainUserCode()
+            userCodeReturn = obtainUserCode()
         
             //accessing fields
-            println("device code: " + userCode.device_code)
-            println("user code: " + userCode.user_code)
-            println("url: " + userCode.verification_url)
-            println("expires in: \(userCode.expires_in)")
+            println("device code: " + userCodeReturn.device_code)
+            println("user code: " + userCodeReturn.user_code)
+            println("url: " + userCodeReturn.verification_url)
+            println("expires in: \(userCodeReturn.expires_in)")
       
         
         
@@ -41,12 +41,12 @@ class ViewController: UIViewController {
     
     
     @IBAction func authUserClicked() {
-        println("request OAuth Token with device code: " + userCode.device_code)
-        userToken = getUserToken(userCode)
+        println("request OAuth Token with device code: " + userCodeReturn.device_code)
+        userToken = getUserToken(userCodeReturn)
         println("")
         println("access Token: " + userToken.access_token)
         println("status: " + userToken.status)
-        println("expires in: \(userCode.expires_in)")
+        println("expires in: \(userToken.expires_in)")
     }
 
     override func didReceiveMemoryWarning() {
