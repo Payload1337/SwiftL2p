@@ -16,26 +16,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="umh-LQ-6t9">
-                                <rect key="frame" x="114" y="60" width="46" height="30"/>
-                                <state key="normal" title="Button">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WSZ-dO-Uee">
+                                <rect key="frame" x="20" y="140" width="97" height="30"/>
+                                <state key="normal" title="auth user">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="click:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="qhN-e3-oaR"/>
+                                    <action selector="authUserClicked" destination="vXZ-lx-hvc" eventType="touchUpInside" id="0Ga-Vo-ex0"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nee-of-rl7">
-                                <rect key="frame" x="55" y="140" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="umh-LQ-6t9">
+                                <rect key="frame" x="16" y="38" width="105" height="30"/>
+                                <state key="normal" title="get url">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="testButtonClicked" destination="vXZ-lx-hvc" eventType="touchUpInside" id="xCu-3R-LnC"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <outlet property="label" destination="Nee-of-rl7" id="nsC-JE-TIy"/>
+                        <outlet property="authUser" destination="WSZ-dO-Uee" id="wrK-vd-PJ9"/>
                         <outlet property="testButton" destination="umh-LQ-6t9" id="y0e-YT-V9k"/>
                     </connections>
                 </viewController>

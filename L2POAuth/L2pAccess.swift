@@ -40,16 +40,19 @@ import Just
 
 
 func getUserToken(user:UserCodeReturn) -> UserToken {
-    let response = Just.post(obtainURL, data: ["client_id":clientID, "code":user.device_code, "grant_type":"device"])
+    let response = Just.post(tokenURL, data: ["client_id":clientID, "code":user.device_code, "grant_type":"device"])
     if let statuscode = response.statusCode as Int! {
         if statuscode != 200 {
+            println("error:  \(statuscode)")
             return UserToken(status: "error:  \(statuscode)")
         }
     }
     if let json = response.json as? NSDictionary {
         if let status = json["status"] as? String {
-            return UserToken(status: status)
-        } else {
+            if status != "ok" {
+                println(status)
+                return UserToken(status: status)
+            }
             if let access_token = json["access_token"] as? String {
                 if let refresh_token = json["refresh_token"] as? String {
                     if let expires_in = json["expires_in"] as? Int {
@@ -57,13 +60,14 @@ func getUserToken(user:UserCodeReturn) -> UserToken {
                     }
                 }
             }
+            
         }
     }
     return UserToken(status: "error")
 }
 
 func refreshToken(userToken:UserToken) {
-    let response = Just.post(obtainURL, data: ["client_id":clientID, "refresh_token":userToken.refresh_token, "grant_type":"refresh_token"])
+    let response = Just.post(tokenURL, data: ["client_id":clientID, "refresh_token":userToken.refresh_token, "grant_type":"refresh_token"])
     if let statuscode = response.statusCode as Int! {
         if statuscode != 200 {
            println("error:  \(statuscode)")
@@ -88,9 +92,37 @@ func refreshToken(userToken:UserToken) {
 
 
 
+func invalidateToken(userToken:UserToken){
+    let response = Just.post(tokenURL, data: ["client_id":clientID, "refresh_token":userToken.refresh_token, "grant_type":"invalidate"])
+    if let statuscode = response.statusCode as Int! {
+        if statuscode != 200 {
+            println("error:  \(statuscode)")
+        }
+    }
+    
+}
 
+func tokenIsValid(userToken:UserToken) -> Bool{
+    let response = Just.post(tokenInfoURL, data: ["client_id":clientID, "access_token":userToken.access_token])
+    if let statuscode = response.statusCode as Int! {
+        if statuscode != 200 {
+            println("error:  \(statuscode)")
+            return false
+        }
+    }
+    if let json = response.json as? NSDictionary {
+        if let state = json["state"] as? String {
+            if state == "valid" {
+                return true
+            }
+            
+        }
+    }
+    
+    return false
 
-
+    
+}
 
 
 
