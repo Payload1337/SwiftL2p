@@ -125,6 +125,11 @@ func tokenIsValid(userToken:UserToken) -> Bool{
 }
 
 
+func callAPI(url:String,userToken:UserToken) -> String {
+    return ""
+}
+
+
 
 struct UserCodeReturn {
     var device_code:String
